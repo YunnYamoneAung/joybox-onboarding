@@ -1,0 +1,36 @@
+:root {
+  --bg: #0b0e14;
+  --card: #121826;
+  --text: #e5e7eb;
+  --muted: #9aa3af;
+  --accent: #7FD1E9;
+  --accent-2: #FD5269;
+  --success: #22c55e;
+  --warn: #f59e0b;
+  --error: #ef4444;
+  --radius: 14px;
+}
+* { box-sizing: border-box; }
+html, body, #root { height: 100%; }
+body { margin: 0; background: linear-gradient(160deg, #0b0e14 0%, #0e1422 100%); color: var(--text); font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji"; }
+a { color: var(--accent); text-decoration: none; }
+.container { margin: 0 auto; padding: 24px; max-width: 920px; }
+.card { background: var(--card); border: 1px solid #1f2937; border-radius: var(--radius); padding: 28px; box-shadow: 0 8px 24px rgba(0,0,0,.25); }
+.title { font-weight: 800; font-size: 28px; margin: 0 0 6px; }
+.muted { color: var(--muted); font-size: 14px; }
+.row { display: grid; gap: 12px; }
+.row-2 { grid-template-columns: repeat(2, minmax(0,1fr)); }
+.btn { display: inline-flex; align-items: center; justify-content: center; padding: 12px 16px; border-radius: 12px; border: 1px solid #263045; background: #0f172a; color: var(--text); cursor: pointer; font-weight: 600; }
+.btn.primary { background: var(--accent); border-color: var(--accent); color: #102530; }
+.btn.ghost { background: transparent; }
+.btn:disabled { opacity: .6; cursor: not-allowed; }
+.spacer { height: 16px; }
+.progress { width: 100%; height: 8px; background: #1f2937; border-radius: 999px; overflow: hidden; }
+.progress > div { height: 100%; background: linear-gradient(90deg, var(--accent), var(--accent-2)); }
+.pill { display: inline-flex; align-items: center; gap: 6px; border: 1px solid #2b344a; padding: 8px 12px; border-radius: 999px; font-size: 14px; color: var(--muted); }
+.input { display: grid; gap: 8px; }
+.input input, .input select, .input textarea { background: #0f172a; color: var(--text); border: 1px solid #263045; padding: 12px 14px; border-radius: 12px; outline: none; }
+.input input:focus, .input textarea:focus, .input select:focus { border-color: var(--accent); box-shadow: 0 0 0 4px rgba(127,209,233,.12); }
+.chips { display: flex; flex-wrap: wrap; gap: 10px; }
+.chip { padding: 8px 12px; border-radius: 999px; border: 1px solid #2b344a; cursor: pointer; }
+.chip.active { background: rgba(127,209,233,.15); border-color: var(--accent); color: var(--accent); }
