@@ -4,15 +4,12 @@ let booted = false;
 
 export async function initLiff() {
   if (booted) return;
-  const liffId = import.meta.env.VITE_LIFF_ID; // make sure this is set in Vercel
-  if (!liffId) throw new Error('VITE_LIFF_ID is missing (set it in Vercel → Project → Settings → Environment Variables)');
+  const liffId = import.meta.env.VITE_LIFF_ID;
+  if (!liffId) throw new Error('VITE_LIFF_ID is missing');
   await liff.init({ liffId });
   booted = true;
 }
 
-/**
- * Opens LINE consent screen and returns back to /confirm
- */
 export async function loginWithConsent() {
   await initLiff();
   liff.login({
@@ -31,4 +28,14 @@ export async function fetchProfile() {
     avatar: prof.pictureUrl,
     email: idt?.email || '',
   };
+}
+
+/** <-- ADD THIS */
+export async function logout() {
+  await initLiff();
+  if (liff.isLoggedIn && liff.isLoggedIn()) {
+    liff.logout();
+  }
+  // send user to home after logout
+  window.location.href = '/';
 }
