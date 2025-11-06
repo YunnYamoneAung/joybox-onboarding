@@ -2,21 +2,36 @@ import React, { useState } from 'react';
 
 export default function SignUp({ onSuccess }) {
   const [form, setForm] = useState({ email: '', password: '' });
+  const [loading, setLoading] = useState(false);
+
   const onChange = e => setForm({ ...form, [e.target.name]: e.target.value });
 
-  const onSubmit = async (e) => {
+  const submit = async e => {
     e.preventDefault();
-    // TODO: your sign-up API call here
-    // await api.signup(form)
-    onSuccess?.(); // -> App routes to /landing
+    setLoading(true);
+    try {
+      // TODO: call your backend here; simulate success:
+      await new Promise(r => setTimeout(r, 600));
+      onSuccess?.();
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
-    <form onSubmit={onSubmit} style={{ maxWidth: 420, margin: '40px auto', display: 'grid', gap: 12 }}>
-      <h2>Create account</h2>
-      <input name="email" placeholder="Email" value={form.email} onChange={onChange} />
-      <input name="password" type="password" placeholder="Password" value={form.password} onChange={onChange} />
-      <button type="submit">Sign up</button>
-    </form>
+    <div className="center-wrap">
+      <form className="card narrow" onSubmit={submit}>
+        <h2>Email sign in</h2>
+        <label className="field">
+          <span>Email</span>
+          <input name="email" type="email" required value={form.email} onChange={onChange}/>
+        </label>
+        <label className="field">
+          <span>Password</span>
+          <input name="password" type="password" required value={form.password} onChange={onChange}/>
+        </label>
+        <button className="btn primary" disabled={loading}>{loading ? 'Signing in…' : 'Continue'}</button>
+      </form>
+    </div>
   );
 }

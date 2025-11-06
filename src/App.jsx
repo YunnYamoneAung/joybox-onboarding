@@ -1,59 +1,60 @@
-// src/App.jsx
 import React, { useEffect, useState } from 'react';
 import { Routes, Route, useNavigate, Navigate } from 'react-router-dom';
 import { initLiff, ensureLogin, getUserProfile } from './liff';
 
-// Your existing pages (keep these files)
 import Welcome from './pages/Welcome.jsx';
-import SignUp from './pages/SignUp.jsx';           // if you use email signup
+import SignUp from './pages/SignUp.jsx';
+import Confirm from './pages/Confirm.jsx';
 import ProfileSetup from './pages/ProfileSetup.jsx';
 import Landing from './pages/Landing.jsx';
 
-function Loader() { return <div style={{ padding: 24 }}>Authorizing with LINE…</div>; }
+function Loader() { return <div className="center-wrap"><div className="card"><h3>Authorizing with LINE…</h3></div></div>; }
 
 function AppInner() {
   const [booted, setBooted] = useState(false);
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
 
+  // Boot LIFF & read profile if returning from LINE
   useEffect(() => {
     (async () => {
       try {
         await initLiff();
-        const ok = ensureLogin();      // redirects to LINE if not logged in
+        const ok = ensureLogin();       // if not logged in, it will redirect
         if (!ok) return;
         const u = await getUserProfile();
         setUser(u);
-        // If user just returned from LINE authorization, send them to landing
-        if (window.location.pathname === '/' || window.location.pathname === '/login') {
-          navigate('/landing', { replace: true });
-        }
       } catch (e) {
-        console.error(e);
+        // If LIFF fails (e.g., using email path), ignore
+        console.debug('LIFF not used or failed; continuing email path.', e?.message);
       } finally {
         setBooted(true);
       }
     })();
-  }, [navigate]);
+  }, []);
 
   if (!booted) return <Loader />;
 
   return (
     <Routes>
-      {/* Pre-login entry pages (kept for email path) */}
+      {/* Entry */}
       <Route path="/" element={<Welcome />} />
-      <Route path="/signup" element={<SignUp onSuccess={() => navigate('/landing')} />} />
+      <Route path="/login" element={<Welcome />} />
+      <Route path="/signup" element={<SignUp onSuccess={() => navigate('/landing', { replace: true })} />} />
 
-      {/* After LINE auth (or after signup success) */}
-      <Route path="/profile-setup" element={<ProfileSetup user={user} />} />
+      {/* After LINE auth */}
+      <Route path="/confirm" element={user ? <Confirm user={user} /> : <Navigate to="/" replace />} />
+      <Route path="/profile-setup" element={user ? <ProfileSetup user={user} onDone={() => navigate('/landing', { replace: true })}/> : <Navigate to="/" replace />} />
+
+      {/* App home */}
       <Route path="/landing" element={<Landing user={user} />} />
 
       {/* Fallback */}
-      <Route path="*" element={<Navigate to="/landing" replace />} />
+      <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );
 }
 
 export default function App() {
-  return <AppInner />;
+  return <AppInner/>;
 }

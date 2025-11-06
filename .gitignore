@@ -1,0 +1,13 @@
+# dependencies & caches
+node_modules/
+.vite/
+dist/
+.vercel/
+.cache/
+tmp/
+*.log
+
+# env & OS files
+.env
+.env.*
+.DS_Store
