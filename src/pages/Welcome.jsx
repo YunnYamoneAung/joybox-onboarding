@@ -1,15 +1,23 @@
-import { Link } from 'react-router-dom'
+import React from 'react';
+import { initLiff, ensureLogin } from '../liff';
+import { useNavigate } from 'react-router-dom';
 
-export default function Welcome(){
+export default function Welcome() {
+  const navigate = useNavigate();
+
+  const handleLine = async () => {
+    await initLiff();
+    const ok = ensureLogin();        // will redirect if not logged in
+    if (ok) navigate('/landing');
+  };
+
   return (
-    <div className="card">
-      <h1 className="title">Welcome to the Creator Platform</h1>
-      <p className="muted">Start your journey: create an account, verify your email, set up your profile, and you’re in.</p>
-      <div className="spacer"></div>
-      <div style={{display:'flex', gap:12}}>
-        <Link className="btn primary" to="/signup">Get Started</Link>
-        <Link className="btn ghost" to="/login">I already have an account</Link>
+    <div style={{ maxWidth: 420, margin: '48px auto', textAlign: 'center' }}>
+      <h2>Sign in</h2>
+      <button onClick={handleLine}>Continue with LINE</button>
+      <div style={{ marginTop: 12 }}>
+        <button onClick={() => navigate('/signup')}>Use email instead</button>
       </div>
     </div>
-  )
+  );
 }
