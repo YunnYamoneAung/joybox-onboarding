@@ -10,8 +10,6 @@ export default function Welcome() {
     try {
       setLoading(true);
       await liff.init({ liffId: import.meta.env.VITE_LIFF_ID });
-
-      // 🔹 Trigger consent screen & redirect to /confirm
       liff.login({
         scope: "profile openid email",
         prompt: "consent",

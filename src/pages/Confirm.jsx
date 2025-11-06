@@ -6,18 +6,14 @@ export default function Confirm() {
 
   useEffect(() => {
     (async () => {
-      try {
-        await liff.init({ liffId: import.meta.env.VITE_LIFF_ID });
-        const prof = await liff.getProfile();
-        const idt = liff.getDecodedIDToken?.();
-        setUser({
-          name: prof.displayName,
-          avatar: prof.pictureUrl,
-          email: idt?.email || "",
-        });
-      } catch (err) {
-        console.error("Failed to load profile:", err);
-      }
+      await liff.init({ liffId: import.meta.env.VITE_LIFF_ID });
+      const prof = await liff.getProfile();
+      const idt  = liff.getDecodedIDToken?.();
+      setUser({
+        name: prof.displayName,
+        avatar: prof.pictureUrl,
+        email: idt?.email || "",
+      });
     })();
   }, []);
 
