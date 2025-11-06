@@ -1,21 +1,25 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { initLiff, ensureLogin } from '../liff';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import liff from "@line/liff";
 
 export default function Welcome() {
-  const nav = useNavigate();
-  const [busy, setBusy] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
-  const lineLogin = async () => {
+  const handleLineLogin = async () => {
     try {
-      setBusy(true);
-      await initLiff();
-      // This will redirect to LINE; when we return,
-      // App.jsx detects it and goes to /confirm.
-      const ok = ensureLogin();
-      if (ok) nav('/confirm');
-    } finally {
-      setBusy(false);
+      setLoading(true);
+      await liff.init({ liffId: import.meta.env.VITE_LIFF_ID });
+
+      // 🔹 Trigger consent screen & redirect to /confirm
+      liff.login({
+        scope: "profile openid email",
+        prompt: "consent",
+        redirectUri: `${window.location.origin}/confirm`,
+      });
+    } catch (err) {
+      console.error("LINE Login Error:", err);
+      setLoading(false);
     }
   };
 
@@ -25,13 +29,13 @@ export default function Welcome() {
         <h2>Welcome</h2>
         <p className="muted">Choose a sign-in method.</p>
 
-        <button className="btn line" onClick={lineLogin} disabled={busy}>
-          {busy ? 'Opening LINE…' : 'Continue with LINE'}
+        <button className="btn line" onClick={handleLineLogin} disabled={loading}>
+          {loading ? "Opening LINE…" : "Continue with LINE"}
         </button>
 
         <div className="sep"><span>or</span></div>
 
-        <button className="btn ghost" onClick={() => nav('/signup')} disabled={busy}>
+        <button className="btn ghost" onClick={() => navigate("/signup")}>
           Sign in with Email
         </button>
       </div>
