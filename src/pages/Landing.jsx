@@ -1,144 +1,152 @@
 import React from "react";
 import { logout } from "../liff";
 
-function StatCard({ title, value, sub, icon }) {
-  return (
-    <div className="dash-card">
-      <div className="dash-card-head">
-        <span>{title}</span>
-        <span className="dash-card-icon">{icon}</span>
-      </div>
-      <div className="dash-card-value">{value}</div>
-      <div className="dash-card-sub">{sub}</div>
-    </div>
-  );
-}
-
-function ActivityItem({ title, when, status }) {
-  return (
-    <div className="activity-item">
-      <div className="activity-title">{title}</div>
-      <div className="activity-meta">
-        <span className="clock">⏱</span> {when}
-      </div>
-      <span
-        className={`pill ${status === "approved" ? "success" : status === "pending" ? "warn" : "neutral"}`}
-      >
-        {status}
-      </span>
-    </div>
-  );
-}
-
 export default function Landing({ user }) {
-  // Fallback to session (so it still works after redirect)
-  if (!user) {
-    try {
-      user = JSON.parse(sessionStorage.getItem("user") || "null");
-    } catch {}
-  }
-
-  const name = user?.name || "Creator";
+  const displayName = user?.name || "Creator";
+  const avatar = user?.avatar;
 
   return (
-    <div className="dash-page">
-      {/* Top nav */}
-      <header className="dash-topbar">
+    <div className="page">
+      {/* Top bar */}
+      <header className="topbar">
         <div className="brand">Joy-Box</div>
-        <nav className="tabs">
-          <a className="active">Dashboard</a>
-          <a>Content</a>
-          <a>Analytics</a>
-          <a>AI Tools</a>
+        <nav className="nav">
+          <a href="#" className="active">Dashboard</a>
+          <a href="#">Content</a>
+          <a href="#">Analytics</a>
+          <a href="#">AI Tools</a>
         </nav>
-        <div className="grow" />
-        <button className="icon-btn" title="Notifications">🔔</button>
-        <div className="user-chip">
-          {user?.avatar ? (
-            <img src={user.avatar} alt="" className="avatar xs" />
-          ) : (
-            <div className="avatar xs">{name.charAt(0)}</div>
-          )}
+        <div className="spacer" />
+        <div className="user">
+          {avatar && <img className="avatar xs" src={avatar} alt="" />}
+          <span>{displayName}</span>
+          <button className="btn text" onClick={logout}>Log out</button>
         </div>
-        <button className="btn text" onClick={logout}>Log out</button>
       </header>
 
-      {/* Content wrapper */}
-      <main className="dash-container">
-        <section className="dash-hero">
-          <h1>Welcome, {name}!</h1>
+      {/* Main */}
+      <main className="container gap">
+        {/* Greeting */}
+        <section className="card">
+          <h2>Welcome, {displayName}!</h2>
           <p className="muted">Here’s what’s happening with your content today.</p>
+
+          {/* Filters row */}
+          <div className="filters">
+            <label className="field">
+              <span>Data Range</span>
+              <select defaultValue="7d">
+                <option value="7d">Last 7 days</option>
+                <option value="30d">Last 30 days</option>
+                <option value="90d">Last 90 days</option>
+              </select>
+            </label>
+
+            <label className="field">
+              <span>Content Types</span>
+              <select defaultValue="all">
+                <option value="all">All types</option>
+                <option value="video">Video</option>
+                <option value="article">Article</option>
+                <option value="workshop">Workshop</option>
+              </select>
+            </label>
+
+            <label className="field">
+              <span>Status</span>
+              <select defaultValue="submitted">
+                <option value="submitted">Submitted</option>
+                <option value="in-review">In review</option>
+                <option value="approved">Approved</option>
+              </select>
+            </label>
+
+            <label className="field">
+              <span>Campaigns</span>
+              <select defaultValue="all">
+                <option value="all">All campaigns</option>
+                <option value="summer">Summer 2025</option>
+                <option value="fall">Fall 2025</option>
+              </select>
+            </label>
+          </div>
         </section>
 
-        {/* Filters */}
-        <section className="dash-filters">
-          <label className="field">
-            <span>Data Range</span>
-            <select defaultValue="7"> 
-              <option value="7">Last 7 days</option>
-              <option value="30">Last 30 days</option>
-              <option value="90">Last 90 days</option>
-            </select>
-          </label>
+        {/* KPIs */}
+        <section className="kpi-grid">
+          <div className="kpi">
+            <div className="meta"><span>Total Views</span><span>👁️</span></div>
+            <div className="value">12.5k</div>
+            <div className="muted fine">+18% from last week</div>
+          </div>
 
-          <label className="field">
-            <span>Content Types</span>
-            <select defaultValue="all">
-              <option value="all">All types</option>
-              <option value="video">Video</option>
-              <option value="article">Article</option>
-              <option value="workshop">Workshop</option>
-            </select>
-          </label>
+          <div className="kpi">
+            <div className="meta"><span>Engagement</span><span>👍</span></div>
+            <div className="value">89%</div>
+            <div className="muted fine">+5% from last week</div>
+          </div>
 
-          <label className="field">
-            <span>Status</span>
-            <select defaultValue="submitted">
-              <option value="submitted">Submitted</option>
-              <option value="approved">Approved</option>
-              <option value="in-review">In review</option>
-              <option value="pending">Pending</option>
-            </select>
-          </label>
-
-          <label className="field">
-            <span>Campaigns</span>
-            <select defaultValue="all">
-              <option value="all">All campaigns</option>
-              <option value="spring">Spring Launch</option>
-              <option value="summer">Summer Growth</option>
-            </select>
-          </label>
+          <div className="kpi">
+            <div className="meta"><span>Growth Rate</span><span>↗</span></div>
+            <div className="value">+23%</div>
+            <div className="muted fine">Monthly average</div>
+          </div>
         </section>
 
-        {/* KPI cards */}
-        <section className="dash-kpis">
-          <StatCard title="Total Views" value="12.5k" sub="+18% from last week" icon="👁️" />
-          <StatCard title="Engagement" value="89%" sub="+5% from last week" icon="👍" />
-          <StatCard title="Growth Rate" value="+23%" sub="Monthly average" icon="↗️" />
-        </section>
+        {/* Upload + Jobs */}
+        <section className="grid-2">
+          <div className="card">
+            <h3>Upload & AI Enhance</h3>
+            <p className="muted">Drop files here or click to browse. We’ll apply your selected AI enhancements.</p>
+            <div className="dropzone">Upload area</div>
 
-        {/* Recent Activity */}
-        <section className="dash-section">
-          <h3>Recent Activity</h3>
-          <p className="muted">Your latest content submissions and updates</p>
+            <div className="grid-2">
+              <label className="field">
+                <span>Enhancement</span>
+                <select defaultValue="clean-up">
+                  <option value="clean-up">Clean-up</option>
+                  <option value="denoise">Denoise</option>
+                  <option value="sharpen">Sharpen</option>
+                </select>
+              </label>
+              <label className="field">
+                <span>Notes</span>
+                <input placeholder="Optional brief" />
+              </label>
+            </div>
 
-          <div className="activity-list">
-            <ActivityItem
-              title="Video: Introduction to Digital Marketing"
-              when="2 hours ago"
-              status="approved"
-            />
-            <ActivityItem
-              title="Article: 10 Tips for Better Content"
-              when="5 hours ago"
-              status="pending"
-            />
-            <ActivityItem
-              title="Workshop: Advanced SEO Techniques"
-              when="1 day ago"
-              status="in-review"
-            />
+            <div className="actions">
+              <button className="btn primary">Process</button>
+            </div>
+          </div>
+
+          <div className="card">
+            <h3>Recent Activity</h3>
+            <div className="list">
+              <div className="row">
+                <div>
+                  <div className="row-title">Video: Introduction to Digital Marketing</div>
+                  <div className="muted fine">2 hours ago</div>
+                </div>
+                <span className="pill">approved</span>
+              </div>
+
+              <div className="row">
+                <div>
+                  <div className="row-title">Article: 10 Tips for Better Content</div>
+                  <div className="muted fine">5 hours ago</div>
+                </div>
+                <span className="pill warn">pending</span>
+              </div>
+
+              <div className="row">
+                <div>
+                  <div className="row-title">Workshop: Advanced SEO Techniques</div>
+                  <div className="muted fine">1 day ago</div>
+                </div>
+                <span className="pill neutral">in-review</span>
+              </div>
+            </div>
           </div>
         </section>
       </main>
