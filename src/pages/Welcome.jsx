@@ -24,19 +24,21 @@ export default function Welcome() {
 
   return (
     <div className="center-wrap">
-      <div className="card narrow">
+      <div className="card narrow welcome-card">
         <h2>Welcome</h2>
         <p className="muted">Choose a sign-in method to continue.</p>
 
-        <button className="btn line" onClick={handleLineLogin} disabled={loading}>
-          {loading ? "Opening LINE..." : "Continue with LINE"}
-        </button>
+        <div className="btn-group">
+          <button className="btn line" onClick={handleLineLogin} disabled={loading}>
+            {loading ? "Opening LINE..." : "Continue with LINE"}
+          </button>
 
-        <div className="sep"><span>or</span></div>
+          <div className="sep"><span>or</span></div>
 
-        <button className="btn ghost" onClick={() => navigate("/signup")}>
-          Sign in with Email
-        </button>
+          <button className="btn ghost" onClick={() => navigate("/signup")}>
+            Sign in with Email
+          </button>
+        </div>
       </div>
     </div>
   );
