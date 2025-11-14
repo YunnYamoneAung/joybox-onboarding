@@ -766,3 +766,244 @@ textarea { min-height: 90px; padding: 12px; }
   padding: 0 12px;
   font-size: 0.85rem;
 }
+
+/* ========= Creator Profile Layout ========= */
+
+.profile-page {
+  padding-top: 32px;
+}
+
+.profile-shell {
+  max-width: 1040px;
+  margin: 0 auto;
+  display: grid;
+  gap: 16px;
+}
+
+/* Header card */
+
+.profile-header-card {
+  background: linear-gradient(180deg, #111318, #0d1016);
+  border-radius: 16px;
+  border: 1px solid var(--stroke);
+  padding: 24px 28px;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 20px;
+  align-items: flex-start;
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.45);
+}
+
+.profile-avatar-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profile-avatar-circle {
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--accent) 0%, var(--accent-2) 55%, #05060a 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 32px;
+  color: #f9fbff;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.6);
+}
+
+.profile-header-main {
+  display: grid;
+  gap: 10px;
+}
+
+.profile-name {
+  font-size: 28px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.profile-pill-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.profile-pill-primary {
+  background: rgba(91, 140, 255, 0.2);
+  color: #dbe7ff;
+  border: 1px solid rgba(91, 140, 255, 0.6);
+}
+
+.profile-pill-muted {
+  background: #151824;
+  color: var(--muted);
+  border: 1px solid #202333;
+}
+
+.profile-meta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  font-size: 13px;
+}
+
+.profile-meta-item {
+  display: grid;
+  gap: 2px;
+}
+
+.profile-meta-label {
+  color: var(--muted);
+  text-transform: uppercase;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+}
+
+.profile-meta-value {
+  color: var(--text);
+}
+
+.profile-bio {
+  margin: 4px 0 0;
+  color: var(--muted);
+  max-width: 640px;
+}
+
+.profile-header-actions {
+  display: flex;
+  align-items: flex-start;
+}
+
+/* Tabs card */
+
+.profile-tabs-card {
+  background: #10131d;
+  border-radius: 16px;
+  border: 1px solid var(--stroke);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+}
+
+.profile-tabs {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  background: #0f121b;
+  border-bottom: 1px solid var(--stroke);
+}
+
+.profile-tab {
+  border: none;
+  background: transparent;
+  padding: 12px 18px;
+  color: var(--muted);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.profile-tab.is-active {
+  background: #141824;
+  color: var(--text);
+}
+
+.profile-tab-panel {
+  padding: 20px 24px 24px;
+}
+
+/* Two-column area */
+
+.profile-two-column {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+}
+
+@media (max-width: 900px) {
+  .profile-header-card {
+    grid-template-columns: 1fr;
+  }
+
+  .profile-header-actions {
+    justify-content: flex-start;
+  }
+
+  .profile-two-column {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Section cards & details */
+
+.profile-section-card {
+  background: #0f1220;
+  border-radius: 14px;
+  border: 1px solid var(--stroke);
+  padding: 18px 20px;
+}
+
+.profile-section-title {
+  margin: 0 0 4px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.profile-section-sub {
+  margin: 0 0 12px;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.profile-details-grid {
+  display: grid;
+  gap: 12px;
+}
+
+.profile-details-grid dt {
+  font-size: 12px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.profile-details-grid dd {
+  margin: 0;
+  font-size: 14px;
+}
+
+/* Social list */
+
+.profile-social-list {
+  list-style: none;
+  margin: 0 0 14px;
+  padding: 0;
+  display: grid;
+  gap: 8px;
+}
+
+.profile-social-label {
+  font-size: 14px;
+  color: var(--text);
+}
+
+.profile-social-value {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+/* Interests pills */
+
+.profile-interests-pill-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.profile-pill-tag {
+  background: #161b2a;
+  border: 1px solid #283250;
+  color: #e0e6ff;
+}

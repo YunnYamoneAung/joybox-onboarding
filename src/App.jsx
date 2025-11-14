@@ -6,7 +6,7 @@ import SignUp from './pages/SignUp.jsx';
 import Confirm from './pages/Confirm.jsx';
 import ProfileSetup from './pages/ProfileSetup.jsx';
 import Landing from './pages/Landing.jsx';
-import Profile from './pages/Profile.jsx';   // 🔸 NEW
+import Profile from './pages/Profile.jsx';   
 
 // Simple placeholder pages for each navigation tab
 function Dashboard() {
@@ -64,7 +64,7 @@ export default function App() {
         <Route path="content" element={<Content />} />
         <Route path="analytics" element={<Analytics />} />
         <Route path="ai-tools" element={<AITools />} />
-        <Route path="profile" element={<Profile />} /> {/* 🔸 NEW nested route */}
+        <Route path="profile" element={<Profile />} /> {/* */}
       </Route>
 
       {/* Fallback */}
