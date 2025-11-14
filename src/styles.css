@@ -628,3 +628,141 @@ textarea { min-height: 90px; padding: 12px; }
   margin: 0;
   font-size: 0.9rem;
 }
+
+/* ========= Creator Profile Page ========= */
+
+.profile-page {
+  max-width: 1040px;
+  margin: 32px auto 48px;
+  padding: 0 24px;
+  display: grid;
+  gap: 18px;
+}
+
+/* Top summary card */
+.profile-summary {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.profile-avatar-lg {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 0, #ffffff33, var(--accent-2));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1.3rem;
+  color: #fff;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.4);
+}
+
+.profile-summary-main {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.profile-summary-name {
+  margin: 0;
+  font-size: 1.15rem;
+}
+
+.profile-summary-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+
+.profile-role-pill {
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: #13203a;
+  border: 1px solid #243554;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #c1d4ff;
+}
+
+.profile-summary-email {
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.profile-summary-muted {
+  margin: 4px 0 0;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+/* Detail section card */
+.profile-section {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.profile-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.profile-section-title {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.profile-section-sub {
+  margin: 4px 0 0;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+/* Fields grid like a professional settings page */
+.profile-fields-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px 32px;
+}
+
+@media (max-width: 720px) {
+  .profile-summary {
+    align-items: flex-start;
+  }
+
+  .profile-fields-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.profile-field {
+  min-width: 0;
+}
+
+.profile-field-label {
+  display: block;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  margin-bottom: 4px;
+}
+
+.profile-field-value {
+  font-size: 0.95rem;
+  color: var(--text);
+}
+
+/* Small button variant for header actions */
+.btn.small {
+  height: 32px;
+  padding: 0 12px;
+  font-size: 0.85rem;
+}
