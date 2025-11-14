@@ -10,7 +10,7 @@ export default function Landing({ user }) {
     <div className="page">
       {/* ─── NAV BAR ───────────────────────────── */}
       <header className="dash-topbar">
-        <div className="brand">Joy-Box</div>
+        <div className="brand">Kluster</div>
 
         <nav className="nav">
           <NavLink
