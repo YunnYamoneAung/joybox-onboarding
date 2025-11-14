@@ -79,18 +79,10 @@ export default function ProfileSetup({ user }) {
       <form className="pro-card" onSubmit={save}>
         {/* header */}
         <div className="pro-header">
-          <div className="pro-step">
-            <span className="dot dot-active" />
-            <span className="line" />
-            <span className="dot" />
-            <span className="line" />
-            <span className="dot" />
-          </div>
-          <div>
             <h1 className="pro-title">Complete your profile</h1>
             <p className="pro-sub">We’ll use this to personalize your dashboard.</p>
           </div>
-        </div>
+        
 
         {/* grid */}
         <div className="pro-grid">
