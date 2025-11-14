@@ -368,3 +368,99 @@ textarea { min-height: 90px; padding: 12px; }
 
 /* actions */
 .pro-card .pro-actions { display: flex; justify-content: flex-end; margin-top: 20px; }
+
+/* ========= Creator Profile (Landing > Profile) ========= */
+
+.profile-layout {
+  max-width: 880px;
+  margin: 32px auto 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.profile-header-row {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.profile-avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 999px;
+  background: radial-gradient(circle at 30% 20%, #5b8cff, #8b5cf6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: white;
+  border: 1px solid var(--stroke);
+  box-shadow: 0 10px 26px rgba(0,0,0,.45);
+}
+
+.profile-title {
+  margin: 0 0 4px;
+  font-size: 1.5rem;
+}
+
+/* two cards side by side */
+.profile-grid {
+  display: grid;
+  grid-template-columns: 2fr 1.5fr;
+  gap: 16px;
+}
+
+@media (max-width: 768px) {
+  .profile-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.profile-card {
+  background: linear-gradient(180deg, #141824, #0f1220);
+  border-radius: 14px;
+  padding: 18px 18px 16px;
+  border: 1px solid var(--stroke);
+  box-shadow: 0 12px 28px rgba(0,0,0,.38);
+}
+
+.profile-card h3 {
+  margin-top: 0;
+  margin-bottom: 12px;
+  font-size: 1rem;
+}
+
+.profile-list {
+  margin: 0;
+}
+
+.profile-list div {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: 4px 12px;
+  padding: 6px 0;
+  border-bottom: 1px solid rgba(35,38,49,0.8);
+}
+
+.profile-list div:last-child {
+  border-bottom: 0;
+}
+
+.profile-list dt {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+}
+
+.profile-list dd {
+  margin: 0;
+}
+
+.profile-hint {
+  margin-top: 10px;
+  font-size: 0.85rem;
+  color: var(--muted);
+}

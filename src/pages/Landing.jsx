@@ -43,11 +43,11 @@ export default function Landing({ user }) {
         <div className="spacer" />
 
         <div className="user">
-          {/* Clickable creator name → profile setup */}
+          {/* Click to see profile overview */}
           <button
             type="button"
             className="btn text"
-            onClick={() => navigate('/profile-setup')}
+            onClick={() => navigate('/landing/profile')}
           >
             {user?.name || 'Creator'}
           </button>

@@ -6,22 +6,43 @@ import SignUp from './pages/SignUp.jsx';
 import Confirm from './pages/Confirm.jsx';
 import ProfileSetup from './pages/ProfileSetup.jsx';
 import Landing from './pages/Landing.jsx';
+import Profile from './pages/Profile.jsx';   // 🔸 NEW
 
 // Simple placeholder pages for each navigation tab
 function Dashboard() {
-  return <div className="container"><h2>Welcome to your Dashboard</h2><p>This is where your overview metrics will appear.</p></div>;
+  return (
+    <div className="container">
+      <h2>Welcome to your Dashboard</h2>
+      <p>This is where your overview metrics will appear.</p>
+    </div>
+  );
 }
 
 function Content() {
-  return <div className="container"><h2>Content</h2><p>This is where you will manage your uploaded or drafted content.</p></div>;
+  return (
+    <div className="container">
+      <h2>Content</h2>
+      <p>This is where you will manage your uploaded or drafted content.</p>
+    </div>
+  );
 }
 
 function Analytics() {
-  return <div className="container"><h2>Analytics</h2><p>This section will show your engagement and growth statistics.</p></div>;
+  return (
+    <div className="container">
+      <h2>Analytics</h2>
+      <p>This section will show your engagement and growth statistics.</p>
+    </div>
+  );
 }
 
 function AITools() {
-  return <div className="container"><h2>AI Tools</h2><p>This is where you will access and use Joy-Box’s AI tools.</p></div>;
+  return (
+    <div className="container">
+      <h2>AI Tools</h2>
+      <p>This is where you will access and use Joy-Box’s AI tools.</p>
+    </div>
+  );
 }
 
 export default function App() {
@@ -43,6 +64,7 @@ export default function App() {
         <Route path="content" element={<Content />} />
         <Route path="analytics" element={<Analytics />} />
         <Route path="ai-tools" element={<AITools />} />
+        <Route path="profile" element={<Profile />} /> {/* 🔸 NEW nested route */}
       </Route>
 
       {/* Fallback */}
