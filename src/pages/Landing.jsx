@@ -1,9 +1,11 @@
 import React from 'react';
-import { NavLink, Outlet } from 'react-router-dom';
+import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 import { logout } from '../liff';
 import '../styles.css';
 
 export default function Landing({ user }) {
+  const navigate = useNavigate();
+
   return (
     <div className="page">
       {/* ─── NAV BAR ───────────────────────────── */}
@@ -41,7 +43,15 @@ export default function Landing({ user }) {
         <div className="spacer" />
 
         <div className="user">
-          <span>{user?.name || 'Creator'}</span>
+          {/* Clickable creator name → profile setup */}
+          <button
+            type="button"
+            className="btn text"
+            onClick={() => navigate('/profile-setup')}
+          >
+            {user?.name || 'Creator'}
+          </button>
+
           <button className="btn text" onClick={logout}>
             Log out
           </button>
