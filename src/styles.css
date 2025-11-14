@@ -284,3 +284,87 @@ textarea { min-height: 90px; padding: 12px; }
   width: 80%;
   max-width: 260px;
 }
+
+/* ====== Profile Setup (namespaced) ====== */
+.pro-card {
+  width: min(980px, 92vw);
+  margin: 48px auto;
+  padding: 28px;
+  border-radius: 20px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.035), rgba(255,255,255,0.02));
+  border: 1px solid rgba(255,255,255,0.06);
+  box-shadow: 0 30px 70px rgba(0,0,0,0.35);
+  backdrop-filter: blur(8px);
+}
+
+/* header */
+.pro-card .pro-header { display: flex; align-items: center; gap: 18px; margin-bottom: 22px; }
+.pro-card .pro-title { margin: 0; font-size: 22px; }
+.pro-card .pro-sub { margin: 4px 0 0; color: var(--muted); }
+
+/* mini stepper */
+.pro-card .pro-step { display: flex; align-items: center; gap: 8px; margin-right: 4px; }
+.pro-card .pro-step .dot { width: 8px; height: 8px; border-radius: 50%; background: #4b5563; opacity: .5; }
+.pro-card .pro-step .dot-active { background: var(--accent); opacity: 1; }
+.pro-card .pro-step .line { width: 24px; height: 2px; background: #3a3f4a; opacity: .6; }
+
+/* responsive grid */
+.pro-card .pro-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+@media (max-width: 860px) { .pro-card .pro-grid { grid-template-columns: 1fr; } }
+.pro-card .pro-col { display: grid; gap: 16px; }
+
+/* fields (namespaced so they don't override your global .field) */
+.pro-card .field { display: grid; gap: 8px; }
+.pro-card .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+@media (max-width: 640px) { .pro-card .field-row { grid-template-columns: 1fr; } }
+.pro-card .field label { font-size: 13px; color: var(--muted); }
+.pro-card .field input,
+.pro-card .field select,
+.pro-card .field textarea {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: #0f1217;
+  border: 1px solid #262a35;
+  color: var(--text);
+  outline: none;
+}
+.pro-card .field input::placeholder,
+.pro-card .field textarea::placeholder { color: #707989; }
+.pro-card .field textarea { resize: vertical; }
+.pro-card .hint { color: var(--muted); font-size: 12px; }
+
+/* segmented role control */
+.pro-card .segmented { display: flex; gap: 8px; flex-wrap: wrap; }
+.pro-card .seg {
+  border: 1px solid #2a2f3a; background: #0f1217; color: var(--text);
+  padding: 8px 12px; border-radius: 999px; cursor: pointer;
+}
+.pro-card .seg.active { background: var(--accent); border-color: var(--accent); color: #0b0c10; }
+
+/* interests chips */
+.pro-card .chips {
+  display: flex; flex-wrap: wrap; gap: 8px; padding: 6px;
+  border: 1px dashed #2b3341; border-radius: 12px; background: #0b0f15;
+}
+.pro-card .chip {
+  background: #101726; border: 1px solid #2f3a4c; color: var(--text);
+  padding: 6px 10px; border-radius: 999px; font-size: 13px; cursor: pointer;
+}
+.pro-card .chip em { font-style: normal; opacity: .6; margin-left: 6px; }
+.pro-card .chip-input {
+  min-width: 160px; flex: 1; border: none; outline: none; background: transparent;
+  color: var(--text); padding: 6px; font: inherit;
+}
+
+/* avatar uploader */
+.pro-card .pro-uploader {
+  width: 112px; height: 112px; border-radius: 50%;
+  overflow: hidden; border: 2px solid #2e3544; cursor: pointer;
+  display: grid; place-items: center; background: #0f1217;
+}
+.pro-card .pro-uploader img { width: 100%; height: 100%; object-fit: cover; }
+.pro-card .pro-uploader-empty { color: #8aa2c6; font-size: 12px; opacity: .8; }
+
+/* actions */
+.pro-card .pro-actions { display: flex; justify-content: flex-end; margin-top: 20px; }

@@ -1,100 +1,239 @@
-import React, { useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-export default function ProfileSetup({ user, onDone }) {
+export default function ProfileSetup({ user }) {
   const navigate = useNavigate();
+  const fileRef = useRef(null);
+
+  // --- form state -----------------------------------------------------------
   const [form, setForm] = useState({
     name: user?.name || "",
     email: user?.email || "",
     role: "",
-    interests: "",
+    interests: [],         // chips
+    university: "",
+    tiktok: "",
+    instagram: "",
+    youtube: "",
+    bio: "",
   });
 
-  const onChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
+  const [avatarPreview, setAvatarPreview] = useState(user?.avatar || "");
 
-  const save = async (e) => {
-    e.preventDefault();
-    try {
-      // TODO: send to your backend API later
-      await new Promise((r) => setTimeout(r, 600));
+  const universities = useMemo(
+    () => [
+      "Assumption University",
+      "Chulalongkorn University",
+      "Kasetsart University",
+      "Thammasat University",
+      "Mahidol University",
+    ],
+    []
+  );
 
-      // ✅ Mark onboarding as complete
-      localStorage.setItem("onboarded", "true");
+  // --- handlers -------------------------------------------------------------
+  const onChange = (e) =>
+    setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
 
-      // ✅ Continue to dashboard
-      navigate("/landing/dashboard", { replace: true });
+  const addInterest = (value) => {
+    const v = value.trim();
+    if (!v) return;
+    setForm((f) =>
+      f.interests.includes(v) ? f : { ...f, interests: [...f.interests, v] }
+    );
+  };
 
-      // If parent handler exists (optional)
-      onDone?.();
-    } catch (err) {
-      alert(err?.message || "Something went wrong saving your profile");
+  const removeInterest = (v) =>
+    setForm((f) => ({ ...f, interests: f.interests.filter((x) => x !== v) }));
+
+  const onInterestsKey = (e) => {
+    if (e.key === "Enter" || e.key === ",") {
+      e.preventDefault();
+      addInterest(e.currentTarget.value);
+      e.currentTarget.value = "";
     }
   };
 
+  const pickAvatar = () => fileRef.current?.click();
+  const onAvatarFile = (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const url = URL.createObjectURL(file);
+    setAvatarPreview(url);
+    // TODO: upload to your storage and keep the returned URL
+  };
+
+  const save = async (e) => {
+    e.preventDefault();
+
+    // TODO: send to backend
+    await new Promise((r) => setTimeout(r, 600));
+
+    localStorage.setItem("onboarded", "true");
+    navigate("/landing/dashboard", { replace: true });
+  };
+
+  // --- UI -------------------------------------------------------------------
   return (
     <div className="center-wrap">
-      <form className="card" onSubmit={save}>
-        <div className="header-row">
-          {user?.avatar && (
-            <img className="avatar sm" src={user.avatar} alt="avatar" />
-          )}
+      <form className="pro-card" onSubmit={save}>
+        {/* header */}
+        <div className="pro-header">
+          <div className="pro-step">
+            <span className="dot dot-active" />
+            <span className="line" />
+            <span className="dot" />
+            <span className="line" />
+            <span className="dot" />
+          </div>
           <div>
-            <h2>Complete your profile</h2>
-            <p className="muted">So we can tailor your dashboard.</p>
+            <h1 className="pro-title">Complete your profile</h1>
+            <p className="pro-sub">We’ll use this to personalize your dashboard.</p>
           </div>
         </div>
 
-        <div className="grid-2">
-          <label className="field">
-            <span>Name</span>
-            <input
-              name="name"
-              value={form.name}
-              onChange={onChange}
-              required
-            />
-          </label>
+        {/* grid */}
+        <div className="pro-grid">
+          {/* left column */}
+          <section className="pro-col">
+            <div className="pro-uploader" onClick={pickAvatar} role="button" tabIndex={0}>
+              {avatarPreview ? (
+                <img src={avatarPreview} alt="avatar preview" />
+              ) : (
+                <div className="pro-uploader-empty">
+                  <span>Upload</span>
+                </div>
+              )}
+              <input ref={fileRef} type="file" accept="image/*" onChange={onAvatarFile} hidden />
+            </div>
 
-          <label className="field">
-            <span>Email</span>
-            <input
-              name="email"
-              type="email"
-              value={form.email}
-              onChange={onChange}
-            />
-          </label>
+            <div className="field">
+              <label>Name</label>
+              <input
+                name="name"
+                value={form.name}
+                onChange={onChange}
+                placeholder="Your full name"
+                required
+              />
+            </div>
 
-          <label className="field">
-            <span>Role</span>
-            <select
-              name="role"
-              value={form.role}
-              onChange={onChange}
-              required
-            >
-              <option value="">Select…</option>
-              <option value="creator">Creator</option>
-              <option value="student">Student</option>
-              <option value="brand">Brand</option>
-            </select>
-          </label>
+            <div className="field">
+              <label>Email</label>
+              <input
+                name="email"
+                type="email"
+                value={form.email}
+                onChange={onChange}
+                placeholder="you@domain.com"
+              />
+              <small className="hint">Used for account recovery and notifications.</small>
+            </div>
 
-          <label className="field">
-            <span>Interests</span>
-            <input
-              name="interests"
-              placeholder="e.g. design, music, coding"
-              value={form.interests}
-              onChange={onChange}
-            />
-          </label>
+            <div className="field">
+              <label>Institution / University</label>
+              <select
+                name="university"
+                value={form.university}
+                onChange={onChange}
+              >
+                <option value="">Select…</option>
+                {universities.map((u) => (
+                  <option key={u} value={u}>
+                    {u}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div className="field">
+              <label>Role</label>
+              <div className="segmented">
+                {["Creator", "Student", "Educator", "Brand"].map((r) => {
+                  const v = r.toLowerCase();
+                  const active = form.role === v;
+                  return (
+                    <button
+                      key={v}
+                      type="button"
+                      className={active ? "seg active" : "seg"}
+                      onClick={() => setForm((f) => ({ ...f, role: v }))}
+                    >
+                      {r}
+                    </button>
+                  );
+                })}
+              </div>
+              <small className="hint">You can change this later in settings.</small>
+            </div>
+          </section>
+
+          {/* right column */}
+          <section className="pro-col">
+            <div className="field">
+              <label>Interests</label>
+              <div className="chips">
+                {form.interests.map((t) => (
+                  <span className="chip" key={t} onClick={() => removeInterest(t)}>
+                    {t} <em>×</em>
+                  </span>
+                ))}
+                <input
+                  className="chip-input"
+                  placeholder="Type and press Enter"
+                  onKeyDown={onInterestsKey}
+                />
+              </div>
+              <small className="hint">Examples: design, marketing, video, UI/UX</small>
+            </div>
+
+            <div className="field-row">
+              <div className="field">
+                <label>TikTok</label>
+                <input
+                  name="tiktok"
+                  value={form.tiktok}
+                  onChange={onChange}
+                  placeholder="@username"
+                />
+              </div>
+              <div className="field">
+                <label>Instagram</label>
+                <input
+                  name="instagram"
+                  value={form.instagram}
+                  onChange={onChange}
+                  placeholder="@username"
+                />
+              </div>
+            </div>
+
+            <div className="field">
+              <label>YouTube</label>
+              <input
+                name="youtube"
+                value={form.youtube}
+                onChange={onChange}
+                placeholder="channel URL"
+              />
+            </div>
+
+            <div className="field">
+              <label>Short bio</label>
+              <textarea
+                name="bio"
+                rows={4}
+                value={form.bio}
+                onChange={onChange}
+                placeholder="Tell us a little about what you do and what you want to learn."
+              />
+            </div>
+          </section>
         </div>
 
-        <div className="actions">
-          <button className="btn primary" type="submit">
-            Save & Continue
-          </button>
+        {/* actions */}
+        <div className="pro-actions">
+          <button type="submit" className="btn primary">Save & Continue</button>
         </div>
       </form>
     </div>
