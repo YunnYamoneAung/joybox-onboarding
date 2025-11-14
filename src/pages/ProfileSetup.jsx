@@ -1,27 +1,43 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function ProfileSetup({ user, onDone }) {
+  const navigate = useNavigate();
   const [form, setForm] = useState({
-    name: user?.name || '',
-    email: user?.email || '',
-    role: '',
-    interests: ''
+    name: user?.name || "",
+    email: user?.email || "",
+    role: "",
+    interests: "",
   });
 
-  const onChange = e => setForm({ ...form, [e.target.name]: e.target.value });
+  const onChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
-  const save = async e => {
+  const save = async (e) => {
     e.preventDefault();
-    // TODO: send to API
-    await new Promise(r => setTimeout(r, 600));
-    onDone?.();
+    try {
+      // TODO: send to your backend API later
+      await new Promise((r) => setTimeout(r, 600));
+
+      // ✅ Mark onboarding as complete
+      localStorage.setItem("onboarded", "true");
+
+      // ✅ Continue to dashboard
+      navigate("/landing/dashboard", { replace: true });
+
+      // If parent handler exists (optional)
+      onDone?.();
+    } catch (err) {
+      alert(err?.message || "Something went wrong saving your profile");
+    }
   };
 
   return (
     <div className="center-wrap">
       <form className="card" onSubmit={save}>
         <div className="header-row">
-          {user?.avatar && <img className="avatar sm" src={user.avatar} alt="avatar" />}
+          {user?.avatar && (
+            <img className="avatar sm" src={user.avatar} alt="avatar" />
+          )}
           <div>
             <h2>Complete your profile</h2>
             <p className="muted">So we can tailor your dashboard.</p>
@@ -31,29 +47,54 @@ export default function ProfileSetup({ user, onDone }) {
         <div className="grid-2">
           <label className="field">
             <span>Name</span>
-            <input name="name" value={form.name} onChange={onChange} required/>
+            <input
+              name="name"
+              value={form.name}
+              onChange={onChange}
+              required
+            />
           </label>
+
           <label className="field">
             <span>Email</span>
-            <input name="email" type="email" value={form.email} onChange={onChange}/>
+            <input
+              name="email"
+              type="email"
+              value={form.email}
+              onChange={onChange}
+            />
           </label>
+
           <label className="field">
             <span>Role</span>
-            <select name="role" value={form.role} onChange={onChange} required>
+            <select
+              name="role"
+              value={form.role}
+              onChange={onChange}
+              required
+            >
               <option value="">Select…</option>
               <option value="creator">Creator</option>
               <option value="student">Student</option>
               <option value="brand">Brand</option>
             </select>
           </label>
+
           <label className="field">
             <span>Interests</span>
-            <input name="interests" placeholder="e.g. design, music, coding" value={form.interests} onChange={onChange}/>
+            <input
+              name="interests"
+              placeholder="e.g. design, music, coding"
+              value={form.interests}
+              onChange={onChange}
+            />
           </label>
         </div>
 
         <div className="actions">
-          <button className="btn primary" type="submit">Save & Continue</button>
+          <button className="btn primary" type="submit">
+            Save & Continue
+          </button>
         </div>
       </form>
     </div>

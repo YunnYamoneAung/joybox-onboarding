@@ -1,21 +1,30 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { fetchProfile } from "../liff";
 
 export default function Confirm() {
-  const [user, setUser] = useState(null);
+  const navigate = useNavigate();
   const [err, setErr] = useState("");
 
   useEffect(() => {
     (async () => {
       try {
-        const u = await fetchProfile();
-        setUser(u);
+        // Ensure LIFF is ready and get user profile
+        await fetchProfile();
+
+        // Decide where to go
+        const onboarded = localStorage.getItem("onboarded") === "true";
+        if (onboarded) {
+          navigate("/landing/dashboard", { replace: true });
+        } else {
+          navigate("/profile-setup", { replace: true });
+        }
       } catch (e) {
         console.error(e);
         setErr(e?.message || "Failed to load LINE profile");
       }
     })();
-  }, []);
+  }, [navigate]);
 
   if (err) {
     return (
@@ -23,30 +32,20 @@ export default function Confirm() {
         <div className="card narrow center">
           <h3>Couldn’t load your profile</h3>
           <p className="muted">{err}</p>
-          <button className="btn" onClick={() => (window.location.href = "/")}>Back</button>
+          <button className="btn" onClick={() => (window.location.href = "/")}>
+            Back
+          </button>
         </div>
       </div>
     );
   }
 
-  if (!user) {
-    return (
-      <div className="center-wrap">
-        <div className="card">Loading profile…</div>
-      </div>
-    );
-  }
-
+  // brief loading while we redirect
   return (
     <div className="center-wrap">
       <div className="card narrow center">
-        {user.avatar && <img src={user.avatar} alt="" className="avatar" />}
-        <h3>Hi {user.name}!</h3>
-        {user.email && <p>{user.email}</p>}
-        <p className="muted">Your LINE account is connected.</p>
-        <button className="btn primary" onClick={() => (window.location.href = "/landing")}>
-          Continue
-        </button>
+        <h3>Signing you in…</h3>
+        <p className="muted">Preparing your workspace.</p>
       </div>
     </div>
   );
