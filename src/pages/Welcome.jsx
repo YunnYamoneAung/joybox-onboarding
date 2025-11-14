@@ -1,24 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import liff from "@line/liff";
 
 export default function Welcome() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-
-  // 🟢 If already logged in, skip the welcome screen
-  useEffect(() => {
-    (async () => {
-      try {
-        await liff.init({ liffId: import.meta.env.VITE_LIFF_ID });
-        if (liff.isLoggedIn()) {
-          window.location.replace("/confirm");
-        }
-      } catch (e) {
-        console.error("LIFF init error:", e);
-      }
-    })();
-  }, []);
 
   const handleLineLogin = async () => {
     try {
