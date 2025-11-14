@@ -464,3 +464,167 @@ textarea { min-height: 90px; padding: 12px; }
   font-size: 0.85rem;
   color: var(--muted);
 }
+
+
+/* ========= Creator Profile (Landing > Profile) ========= */
+
+.creator-page {
+  max-width: 960px;
+  margin: 32px auto 40px;
+  padding: 0 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.creator-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.creator-id {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.creator-avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 999px;
+  background: radial-gradient(circle at 30% 20%, #5b8cff, #8b5cf6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: #fff;
+  border: 1px solid var(--stroke);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.55);
+}
+
+.creator-id-text h1 {
+  margin: 0 0 6px;
+  font-size: 1.6rem;
+}
+
+.creator-meta-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.creator-role-pill {
+  padding: 2px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--stroke);
+  background: #141824;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+}
+
+.creator-email {
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.creator-tagline {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+/* Cards grid */
+
+.creator-grid {
+  display: grid;
+  grid-template-columns: 2fr 1.5fr;
+  gap: 18px;
+}
+
+@media (max-width: 840px) {
+  .creator-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .creator-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .creator-page {
+    padding: 0 16px;
+  }
+}
+
+.creator-card {
+  background: linear-gradient(180deg, #141824, #0f1220);
+  border-radius: 14px;
+  padding: 18px 20px 16px;
+  border: 1px solid var(--stroke);
+  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.45);
+}
+
+.creator-card h2 {
+  margin: 0 0 10px;
+  font-size: 1rem;
+}
+
+.creator-list {
+  margin: 0;
+}
+
+.creator-list div {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: 4px 12px;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(35, 38, 49, 0.8);
+}
+
+.creator-list div:last-child {
+  border-bottom: 0;
+}
+
+.creator-list dt {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+}
+
+.creator-list dd {
+  margin: 0;
+}
+
+/* Interests block */
+
+.creator-helper {
+  margin: 0 0 10px;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.creator-interests-block {
+  margin-top: 4px;
+}
+
+.creator-label {
+  display: block;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  margin-bottom: 4px;
+}
+
+.creator-interests-value {
+  margin: 0;
+  font-size: 0.9rem;
+}

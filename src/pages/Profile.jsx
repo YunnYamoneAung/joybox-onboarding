@@ -2,7 +2,7 @@
 import React, { useMemo } from "react";
 
 export default function Profile() {
-  // Read saved profile from localStorage (from ProfileSetup)
+  // Read saved profile from localStorage (set in ProfileSetup.jsx)
   const stored = localStorage.getItem("profile");
   const base = { name: "", email: "", role: "", interests: "" };
 
@@ -13,8 +13,9 @@ export default function Profile() {
     profile = base;
   }
 
+  // Initials for avatar (e.g. "Y" or "YA")
   const initials = useMemo(() => {
-    if (!profile.name) return "JB";
+    if (!profile.name) return "JB"; // Joy-Box default
     return profile.name
       .split(" ")
       .filter(Boolean)
@@ -24,67 +25,69 @@ export default function Profile() {
       .toUpperCase();
   }, [profile.name]);
 
+  const roleLabel = profile.role
+    ? profile.role.charAt(0).toUpperCase() + profile.role.slice(1)
+    : "Creator";
+
+  const hasInterests = Boolean(profile.interests && profile.interests.trim());
+
   return (
     <div className="profile-layout">
       {/* Top row: avatar + title */}
       <div className="profile-header-row">
-        <div className="profile-avatar">
-          <span>{initials}</span>
-        </div>
+        <div className="profile-avatar">{initials}</div>
         <div>
-          <h2 className="profile-title">
-            {profile.name || "Your creator profile"}
-          </h2>
-          <p className="muted">
+          <h1 className="profile-title">Your creator profile</h1>
+          <p className="profile-sub">
             This is the information Joy-Box uses to personalize your dashboard.
           </p>
         </div>
       </div>
 
-      {/* Two-column info cards */}
+      {/* Two cards layout */}
       <div className="profile-grid">
+        {/* Account card */}
         <section className="profile-card">
-          <h3>Account</h3>
-          <dl className="profile-list">
-            <div>
-              <dt>Name</dt>
-              <dd>{profile.name || "Not set"}</dd>
-            </div>
-            <div>
-              <dt>Email</dt>
-              <dd>{profile.email || "Not set"}</dd>
-            </div>
-            <div>
-              <dt>Role</dt>
-              <dd>
-                {profile.role
-                  ? profile.role.charAt(0).toUpperCase() +
-                    profile.role.slice(1)
-                  : "Not set"}
-              </dd>
-            </div>
-          </dl>
+          <h3 className="section-title">Account</h3>
+
+          <div className="profile-row">
+            <span className="profile-label">Name</span>
+            <span className="profile-value">{profile.name || "Not set"}</span>
+          </div>
+
+          <div className="profile-row">
+            <span className="profile-label">Email</span>
+            <span className="profile-value">{profile.email || "Not set"}</span>
+          </div>
+
+          <div className="profile-row">
+            <span className="profile-label">Role</span>
+            <span className="profile-value">{roleLabel || "Not set"}</span>
+          </div>
         </section>
 
+        {/* Creator details card */}
         <section className="profile-card">
-          <h3>Creator details</h3>
-          <dl className="profile-list">
-            <div>
-              <dt>Interests</dt>
-              <dd>{profile.interests || "Tell us what you create or care about."}</dd>
-            </div>
-          </dl>
-          <p className="profile-hint">
-            We use your interests and role to recommend tools, content
-            opportunities, and analytics views that match your goals.
-          </p>
-        </section>
-      </div>
+          <h3 className="section-title">Creator details</h3>
 
-      <div className="actions">
-        <a href="/profile-setup" className="btn ghost">
-          Edit profile
-        </a>
+          <div className="creator-interests-block">
+            <span className="creator-label">Interests</span>
+            <p className="creator-interests-value">
+              {hasInterests
+                ? profile.interests
+                : "Tell us what you create or care about so we can recommend the right tools, content opportunities, and analytics views for you."}
+            </p>
+          </div>
+
+          <button
+            type="button"
+            className="btn ghost"
+            style={{ marginTop: "16px" }}
+            onClick={() => (window.location.href = "/profile-setup")}
+          >
+            Edit profile
+          </button>
+        </section>
       </div>
     </div>
   );
