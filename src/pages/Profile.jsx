@@ -21,7 +21,7 @@ export default function Profile() {
 
   // Initials for avatar (e.g. "Y" or "YA")
   const initials = useMemo(() => {
-    if (!profile.name) return "JB"; // Joy-Box default
+    if (!profile.name) return "KL"; // Joy-Box default
     return profile.name
       .split(" ")
       .filter(Boolean)
@@ -54,7 +54,7 @@ export default function Profile() {
             )}
           </div>
           <p className="profile-summary-muted">
-            Joy-Box uses this information to personalize your dashboard,
+            Kluster uses this information to personalize your dashboard,
             recommendations, and analytics.
           </p>
         </div>
